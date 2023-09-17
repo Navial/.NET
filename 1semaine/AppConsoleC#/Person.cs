@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace AppConsoleC_
 {
-    [Serializable] public class Personne
+    [Serializable] public class Person
     {
 
         private string _name;
@@ -42,7 +42,7 @@ namespace AppConsoleC_
 
         public override string ToString()
         {
-            return "Person [name = " + _name + ", firstname = " + _firstname + ", birthDate =  " + _birthDate + "]";
+            return "Person [name = " + _name + ", firstname = " + _firstname + ", birthDate =  " + BirthDate + "]";
         }
 
 
