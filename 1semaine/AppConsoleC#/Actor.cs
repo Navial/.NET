@@ -51,8 +51,8 @@ namespace AppConsoleC_ {
              if ((movie == null) || _movies.Contains(movie))
                  return false;
          
-             // if (!movie.containsActor(this))
-             //     movie.addActor(this);
+             if (!movie.ContainsActor(this))
+                 movie.AddActor(this);
              _movies.Add(movie);
              return true;
          }

@@ -14,7 +14,7 @@ namespace AppConsoleC_
         private string _title;
         private int _releaseYear;
         private List<Actor> _actors;
-        // private Director _director;
+        private Director _director;
 
         public virtual string Title
         {
@@ -28,26 +28,22 @@ namespace AppConsoleC_
             set { _releaseYear = value; }
         }
 
-        public Movie(String title, int releaseYear)
+        public Movie(string title, int releaseYear)
         {
             _actors = new List<Actor>();
             this._title = title;
             this._releaseYear = releaseYear;
         }
 
-        // public Director Director 
-        // {
-        //     get { return _director; } 
-        // }
-
-        // public void setDirector(Director director)
-        // {
-        //     if (director == null)
-        //         return;
-        //     this.director = director;
-        //     director.addMovie(this);
-        // }
-
+        public virtual Director Director 
+        {
+            get { return _director; } 
+            set 
+            {
+                _director.AddMovie(this);
+                _director = value; 
+            }
+        }
 
         public bool AddActor(Actor actor)
         {
@@ -66,8 +62,7 @@ namespace AppConsoleC_
             return _actors.Contains(actor);
         }
 
-        
-        public override String ToString()
+        public override string ToString()
         {
             return "Movie [title=" + _title + ", releaseYear=" + _releaseYear + "]";
         }

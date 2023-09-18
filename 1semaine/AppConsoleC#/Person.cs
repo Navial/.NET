@@ -21,7 +21,7 @@ namespace AppConsoleC_
             set { _name = value; }
         }
 
-        public string Firstname
+        public virtual string Firstname
         {
             get { return _firstname; }
             set { _firstname = value; }
@@ -33,7 +33,7 @@ namespace AppConsoleC_
             get { return _birthDate.ToString(); }
         }
 
-        public Personne(string name, string firstname, DateTime birthDate)
+        public Person(string name, string firstname, DateTime birthDate)
         {
             this._name = name;
             this._firstname = firstname;
