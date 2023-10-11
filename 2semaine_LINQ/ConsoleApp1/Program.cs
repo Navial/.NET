@@ -95,7 +95,7 @@ Console.WriteLine("Number of students : " + studentsCount.Count());
 
 Console.WriteLine("\n---EX5.1---");
 var bestResult = (from Student student in dc.Students
-                  group b
+                  group by student.Section_ID
                          select student.Year_Result
                                );
 
