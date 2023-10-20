@@ -84,7 +84,26 @@ using (NorthwindContext context = new NorthwindContext())
         Console.WriteLine(emp.FirstName + " " + emp.LastName + " | region : " + emp.Region);
     }
 
+    Console.WriteLine("------ 7. Quels sont les territoires gérés par le supérieur de « Suyama Michael » ------");
+
+    String employee_fn = "Michael";
+    String employee_ln = "Suyama";
+
+    var employeeId = from employee in context.Employees
+                    where employee.FirstName == employee_fn &&
+                    employee.LastName == employee_ln
+                    select employee.ReportsTo;
+
+    var terr_from_superior = from territory in context.Territories.Include("Employees")
+                             where territory.TerritoryId == 
+                             select new
+                             {
+                                 FirstName = employee.FirstName,
+                                 LastName = employee.LastName,
+                                 Region = employee.Region,
+                             };
+
+
+
 
 }
-
-
