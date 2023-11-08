@@ -65,8 +65,8 @@ using (NorthwindContext context = new NorthwindContext())
         Console.WriteLine($"ProductId: {ps.ProductId}, TotalSales: {ps.TotalSales}");
     }
     
-    */
-
+    
+    
     Console.WriteLine("------ 6.Afficher tous les employés (leur nom) qui ont sous leur responsabilité la région « Western » ------");
 
     var workers_west = from employee in context.Employees
@@ -83,27 +83,108 @@ using (NorthwindContext context = new NorthwindContext())
     {
         Console.WriteLine(emp.FirstName + " " + emp.LastName + " | region : " + emp.Region);
     }
+    
 
     Console.WriteLine("------ 7. Quels sont les territoires gérés par le supérieur de « Suyama Michael » ------");
 
     String employee_fn = "Michael";
     String employee_ln = "Suyama";
 
-    var employeeId = from employee in context.Employees
+    var superiorId = from employee in context.Employees
                     where employee.FirstName == employee_fn &&
                     employee.LastName == employee_ln
                     select employee.ReportsTo;
+    Console.WriteLine("--- superior id : " + superiorId.First());
 
-    var terr_from_superior = from territory in context.Territories.Include("Employees")
-                             where territory.TerritoryId == 
-                             select new
-                             {
-                                 FirstName = employee.FirstName,
-                                 LastName = employee.LastName,
-                                 Region = employee.Region,
-                             };
+    var terr_from_superior = (from employee in context.Employees
+                             where employee.EmployeeId == superiorId.First()
+                             select employee.Territories);
 
+    Console.WriteLine("Michael Suyama's superior's territories");
+    Console.WriteLine("--- territories lenght : " + terr_from_superior.Count());
+    int count = 1;
+    foreach (var ter in terr_from_superior)
+    {
+        foreach( var terr in ter)
+        {
+            Console.WriteLine(count + ") " + terr.TerritoryDescription);
+            count++;
+        }
+    }
+    
 
+    // --- UPDATES ---
+    var customers = from c in context.Customers
+                    select c;
+
+    // Mettre à jour chaque nom de client pour être en majuscules
+    foreach (var customer in customers)
+    {
+        customer.ContactName = customer.ContactName.ToUpper();
+    }
+
+    // Sauvegarder les changements dans la base de données
+    context.SaveChanges();
+
+    customers = from c in context.Customers
+                    select c;
+
+    foreach( var customer in customers)
+    {
+        Console.WriteLine(customer.ContactName);
+    }
+    
+
+    // --- INSERT --- 
+    Console.WriteLine("Entrez le nom de la nouvelle catégorie:");
+    string categoryName = Console.ReadLine();
+
+    // Créer une nouvelle instance de la catégorie
+    var newCategory = new Category
+    {
+        CategoryName = categoryName
+    };
+
+    // Ajouter la nouvelle catégorie au contexte
+    context.Categories.Add(newCategory);
+
+    // Sauvegarder les changements dans la base de données
+    context.SaveChanges();
+
+    var categories = from c in context.Categories
+                     select c;
+
+    foreach ( var category in categories)
+    {
+        Console.WriteLine(category.CategoryName);
+    }
+    */
+    // --- DELETE --- 
+    Console.WriteLine("Entrez le nom de la catégorie à supprimer:");
+    string categoryNameToDelete = Console.ReadLine();
+
+    var categoryToDelete = context.Categories.FirstOrDefault(c => c.CategoryName.Equals(categoryNameToDelete));
+    if(categoryNameToDelete != null) 
+    {
+        // Supprimer la catégorie du contexte
+        context.Categories.Remove(categoryToDelete);
+
+        // Sauvegarder les changements dans la base de données
+        context.SaveChanges();
+
+        Console.WriteLine("Catégorie supprimée avec succès.");
+        var categories = from c in context.Categories
+                         select c;
+
+        foreach (var category in categories)
+        {
+            Console.WriteLine(category.CategoryName);
+        }
+    }
+    else
+    {
+        Console.WriteLine("Catégorie non trouvée.");
+    }
 
 
 }
