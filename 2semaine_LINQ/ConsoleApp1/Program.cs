@@ -94,12 +94,47 @@ var studentsCount = (from Student student in dc.Students
 Console.WriteLine("Number of students : " + studentsCount.Count());
 
 Console.WriteLine("\n---EX5.1---");
-var bestResult = (from Student student in dc.Students
-                  group by student.Section_ID
-                         select student.Year_Result
-                               );
 
-int max = bestResult.Max();
-Console.WriteLine("Max : " + max);
+var maxResultsPerSection = from student in dc.Students
+                           group student by student.Section_ID into studentGroup
+                           select new
+                           {
+                               Section = studentGroup.Key,
+                               Max_Result = (from s in studentGroup
+                                             select s.Year_Result).Max()
+                           };
+
+foreach (var item in maxResultsPerSection)
+{
+    Console.WriteLine("Section: " + item.Section + " | Max Year Result: " + item.Max_Result);
+}
 
 Console.WriteLine("\n---EX5.3---");
+
+var resultatMoyenParMois = (from student in dc.Students
+                            where student.BirthDate.Year >= 1970 &&
+                            student.BirthDate.Year <= 1985
+                            group student by student.BirthDate.Month into studentGroup
+                            select new
+                            {
+                                BirthMonth = studentGroup.Key,
+                                AVG_Result = (from s in studentGroup
+                                              select s.Year_Result).Average()
+                            }
+                            );
+
+foreach (var item in resultatMoyenParMois)
+{
+    Console.WriteLine("Birth month: " + item.BirthMonth + " | AVG Year Result: " + item.AVG_Result);
+}
+
+Console.WriteLine("\n---EX5.5---");
+
+/*var courseSectionProfessor = from course in dc.Courses.Join(dc.p) 
+                             select new
+                             {
+                                 Course_name = course.Course_Name,
+                                 Section_name = course.
+                             };
+*/
+

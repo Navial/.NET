@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectPath": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
-        "outputPath": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\ConsoleApp1\\obj\\",
+        "outputPath": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\victo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj": {
-                "projectPath": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj"
+              "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj": {
+                "projectPath": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj"
               }
             }
           }
@@ -63,14 +63,14 @@
         }
       }
     },
-    "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj": {
+    "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj",
+        "projectUniqueName": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj",
         "projectName": "LINQ_DataContext",
-        "projectPath": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj",
+        "projectPath": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\LINQ_DataContext.csproj",
         "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
-        "outputPath": "D:\\CoursIPL\\BLOC3\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\obj\\",
+        "outputPath": "C:\\COURS_IPL\\BLOC3\\.NET\\.NET\\2semaine_LINQ\\Semaine 2 - LINQ_DataContext\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\victo\\AppData\\Roaming\\NuGet\\NuGet.Config",
