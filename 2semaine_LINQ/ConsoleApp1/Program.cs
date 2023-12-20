@@ -130,11 +130,17 @@ foreach (var item in resultatMoyenParMois)
 
 Console.WriteLine("\n---EX5.5---");
 
-/*var courseSectionProfessor = from course in dc.Courses.Join(dc.p) 
+var courseSectionProfessor = from course in dc.Courses
+                             join professor in dc.Professors on course.Professor_ID equals professor.Professor_ID
+                             join section in dc.Sections on professor.Section_ID equals section.Section_ID
                              select new
                              {
                                  Course_name = course.Course_Name,
-                                 Section_name = course.
+                                 Section_name = section.Section_Name,
+                                 Professor = professor.Professor_Surname
                              };
-*/
+foreach (var item in courseSectionProfessor)
+{
+    Console.WriteLine($"Course Name: {item.Course_name}, Section Name: {item.Section_name}, Professor Name: {item.Professor}");
+}
 
