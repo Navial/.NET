@@ -1,4 +1,5 @@
 ﻿using LINQDataContext;
+using static System.Collections.Specialized.BitVector32;
 
 DataContext dc = new DataContext();
 
@@ -144,3 +145,27 @@ foreach (var item in courseSectionProfessor)
     Console.WriteLine($"Course Name: {item.Course_name}, Section Name: {item.Section_name}, Professor Name: {item.Professor}");
 }
 
+
+Console.WriteLine("\n---EX5.7 & 5.8---");
+
+var professorBySection = from section in dc.Sections
+                         join professor in dc.Professors on section.Section_ID equals professor.Section_ID
+                         group professor by new { section.Section_ID, section.Section_Name} into professorSection
+                         where professorSection.Any()
+                         select new
+                         {
+                             SectionId = professorSection.Key.Section_ID,
+                             SectionName = professorSection.Key.Section_Name,
+                             Professors = professorSection.Select(p => p.Professor_Name)
+                         };
+
+foreach (var item in professorBySection)
+{
+    Console.WriteLine($"sectionId: {item.SectionId}, section name : {item.SectionName}");
+
+    foreach (var professor in item.Professors)
+    {
+        Console.WriteLine($"--- professors: {professor}");
+
+    }
+}
