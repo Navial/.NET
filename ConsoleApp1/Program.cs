@@ -164,7 +164,7 @@ using (NorthwindContext context = new NorthwindContext())
     string categoryNameToDelete = Console.ReadLine();
 
     var categoryToDelete = context.Categories.FirstOrDefault(c => c.CategoryName.Equals(categoryNameToDelete));
-    if(categoryNameToDelete != null) 
+    if(categoryToDelete != null) 
     {
         // Supprimer la catégorie du contexte
         context.Categories.Remove(categoryToDelete);
