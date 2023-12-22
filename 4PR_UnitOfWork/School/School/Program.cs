@@ -1,15 +1,23 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Repository;
 using School.Models;
-using System.Collections;
-using static System.Collections.Specialized.BitVector32;
+using School.Repository;
+using School.UnitOfWork;
 using Section = School.Models.Section;
 
-SchoolContext sc = new SchoolContext();
+/*
 BaseRepositorySQL<Section> rSec = new BaseRepositorySQL<Section>(sc);
 BaseRepositorySQL<Student> rStu = new BaseRepositorySQL<Student>(sc);
+*/
+SchoolContext sc = new SchoolContext();
 
+StudentRepositorySQLServer sRepo = new StudentRepositorySQLServer(sc);
 
+IUnitOfWork unitOfWork = new UnitOfWorkSQLServer(sc);
+
+IRepository<Section> rSec =  unitOfWork.SectionsRepository;
+IStudentRepository rStu =  unitOfWork.StudentsRepository;
 
 
 var nSecInfo = new Section
@@ -52,9 +60,18 @@ var studdiet = new Student
     Section = secDiet,
     YearResult = 120
 };
+
 rStu.Save(studinfo1, s => s.Name.Equals(studinfo1.Name) && s.Firstname.Equals(studinfo1.Firstname));
 rStu.Save(studinfo2, s => s.Name.Equals(studinfo2.Name) && s.Firstname.Equals(studinfo2.Firstname));
 rStu.Save(studdiet, s => s.Name.Equals(studdiet.Name) && s.Firstname.Equals(studdiet.Firstname));
+
+
+var studsBySec = sRepo.GetStudentBySectionOrderByYearResult();
+
+foreach (Student s in studsBySec)
+{
+    Console.WriteLine("SECTION : " + s.Section.Name + " STUD : " + s.Name + " YEAR_RESULT : " + s.YearResult);
+}
 
 /*
 addStudent(studinfo1);
