@@ -12,32 +12,21 @@ BaseRepositorySQL<Student> rStu = new BaseRepositorySQL<Student>(sc);
 
 
 
-var secInfo = new Section
+var nSecInfo = new Section
 {
     Name = "secInfo"
 };
 
-var secDiet = new Section
+var nSecDiet = new Section
 {
     Name = "secDiet"
 };
 
-if(rSec.SearchFor(s => s.Name.Equals(secDiet.Name)).IsNullOrEmpty())
-{
-    rSec.Insert(secDiet);
+addSection(nSecInfo);
+addSection(nSecDiet);
 
-}
-if (rSec.SearchFor(s => s.Name.Equals(secInfo.Name)).IsNullOrEmpty())
-{
-    rSec.Insert(secDiet);
-}
-
-var sections = rSec.GetAll();
-
-foreach (var sec in sections)
-{
-    Console.WriteLine(sec.Name);
-}
+var secInfo = rSec.SearchFor(s => s.Name.Equals("secInfo")).First();
+var secDiet = rSec.SearchFor(s => s.Name.Equals("secDiet")).First();
 
 var studinfo1 = new Student
 {
@@ -61,16 +50,24 @@ var studdiet = new Student
     YearResult = 120
 };
 
-rStu.Insert(studinfo1);
-if (rStu.SearchFor(s => s.Name.Equals(studinfo1.Name) && s.Firstname.Equals(studinfo1.Firstname)).IsNullOrEmpty())
+addStudent(studinfo1);
+addStudent(studinfo2);
+addStudent(studdiet);
+
+void addSection(Section sec)
 {
-    rStu.Insert(studinfo1);
+    if (rSec.SearchFor(s => s.Name.Equals(sec.Name)).IsNullOrEmpty())
+    {
+        Console.WriteLine("Add " + sec.Name);
+        rSec.Insert(sec);
+    }
 }
-if (rStu.SearchFor(s => s.Name.Equals(studinfo2.Name) && s.Firstname.Equals(studinfo2.Firstname)).IsNullOrEmpty())
+
+void addStudent(Student stud)
 {
-    rStu.Insert(studinfo2);
-}
-if (rStu.SearchFor(s => s.Name.Equals(studdiet.Name) && s.Firstname.Equals(studdiet.Firstname)).IsNullOrEmpty())
-{
-    rStu.Insert(studdiet);
+    if (rStu.SearchFor(s => s.Name.Equals(stud.Name) && s.Firstname.Equals(stud.Firstname)).IsNullOrEmpty())
+    {
+        Console.WriteLine("Add " + stud.Name);
+        rStu.Insert(stud);
+    }
 }
