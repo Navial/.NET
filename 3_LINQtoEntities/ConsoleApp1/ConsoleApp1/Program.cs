@@ -125,7 +125,7 @@ foreach (var customer in customers)
 }
 */
 
-
+/*
 var clients = from c in nc.Customers
               select c;
 
@@ -141,4 +141,7 @@ var nClients = from c in nc.Customers
 foreach( var client in nClients)
 {
     Console.WriteLine(client.ContactName);
-}
+}*/
+
+
+
