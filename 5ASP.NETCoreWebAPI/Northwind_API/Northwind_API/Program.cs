@@ -1,13 +1,31 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Northwind_API.Entities;
+using Repository; // Assurez-vous que c'est le bon espace de noms pour votre IRepository et BaseRepository
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Ajout de la configuration du DbContext
+builder.Services.AddDbContext<NorthwindContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDatabase")));
+
+// Configuration du repository pour l'injection de dépendances
+builder.Services.AddScoped<IRepository<Employee>, BaseRepository<Employee>>();
+
+// Configuration de Swagger pour générer une documentation API et une interface utilisateur
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Ajout des services de contrôleurs
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuration du pipeline HTTP request
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,28 +34,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Si vous n'utilisez pas l'autorisation/autentification, vous pouvez commenter la ligne suivante
+// app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers(); // Mappage des contrôleurs pour les routes
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
