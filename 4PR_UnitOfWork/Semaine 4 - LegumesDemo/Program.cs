@@ -8,7 +8,7 @@ Console.WriteLine("Legumes Démo - Pattern Repository SEUL très peu utilisé");
 /***** UNIQUEMENT Avec Pattern Repository ... rarement utilisé sans UnitOfWork  */
 
 // SQL
-//LegumesContext context = new LegumesContext();
+LegumesContext context = new LegumesContext();
 //BaseRepositorySQL<Legume> repoLegumes = new BaseRepositorySQL<Legume>(context);
 
 // Mem
@@ -39,9 +39,9 @@ Console.WriteLine("Legumes Démo - Pattern Repository & UnitOfWork très utilis�
 // Use of UnitOfWork  ... très utilisé ! 
 
 // Mem -> pour test ... pipeline ...
-IUnitOfWorkLegumes unitofWorkLegumes = new UnitOfWorkLegumesMemory();
+//IUnitOfWorkLegumes unitofWorkLegumes = new UnitOfWorkLegumesMemory();
 // SQL -> pour production
-//IUnitOfWorkLegumes unitofWorkLegumes = new UnitOfWorkLegumesSQLServer(context);
+IUnitOfWorkLegumes unitofWorkLegumes = new UnitOfWorkLegumesSQLServer(context);
 
 Console.WriteLine("Liste des légumes");
 

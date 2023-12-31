@@ -2,6 +2,7 @@
 using Northwind_API.Entities;
 using Northwind_API.Models;
 using Northwind_API.Repositories;
+using Northwind_API.UnitOfWork;
 using Repository;
 
 
@@ -12,17 +13,22 @@ public class EmployeeController : ControllerBase
 {
     private readonly EmployeeRepository _employeeRepository;
 
+    NorthwindContext context = new NorthwindContext();
 
-    public EmployeeController(EmployeeRepository employeeRepository)
+    private readonly IUnitOfWork _unitOfWork;
+
+
+    public EmployeeController(IUnitOfWork unitOfWork, EmployeeRepository employeeRepository)
     {
         _employeeRepository = employeeRepository;
+        _unitOfWork = unitOfWork;
     }
 
     // GET
     [HttpGet]
     public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetAllEmployees()
     {
-        var employees = await _employeeRepository.GetAllAsync();
+        var employees = await _unitOfWork.EmployeeRepository.GetAllAsync();
         var employeeDTOs = employees.Select(e => new EmployeeDTO
         {
             EmployeeId = e.EmployeeId,
@@ -37,9 +43,9 @@ public class EmployeeController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<IEnumerable<Employee>>> CreateEmployee(Employee employee)
     {
-        await _employeeRepository.InsertAsync(employee);
+        await _unitOfWork.EmployeeRepository.InsertAsync(employee);
         //return Ok(employee);
-        return CreatedAtAction(nameof(_employeeRepository.GetByIdAsync), new { id = employee.EmployeeId }, employee);
+        return CreatedAtAction(nameof(_unitOfWork.EmployeeRepository.GetByIdAsync), new { id = employee.EmployeeId }, employee);
     }
 
     // UPDATE
@@ -51,7 +57,7 @@ public class EmployeeController : ControllerBase
             return BadRequest();
         }
 
-        var result = await _employeeRepository.SaveAsync(employee, e => e.EmployeeId == id);
+        var result = await _unitOfWork.EmployeeRepository.SaveAsync(employee, e => e.EmployeeId == id);
         if (result == null)
         {
             return NotFound();
@@ -62,10 +68,10 @@ public class EmployeeController : ControllerBase
 
     // DELETE 
     [HttpDelete]
-    public async Task<ActionResult<IEnumerable<Employee>>> DeleteEmployee(int id)
+    public async Task<IActionResult> DeleteEmployee(int id)
     {
-        var restult = await _employeeRepository.DeleteAsync(id);
-        return Ok(restult);
+        await _unitOfWork.EmployeeRepository.DeleteAsync(id);
+        return Ok(new { message = "Employee deleted successfully." });
     }
 
 }

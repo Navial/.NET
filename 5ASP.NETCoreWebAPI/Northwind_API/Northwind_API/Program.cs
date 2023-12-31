@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Northwind_API.Entities;
 using Repository; // Assurez-vous que c'est le bon espace de noms pour votre IRepository et BaseRepository
 using Northwind_API.Repositories;
+using Northwind_API.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDatabase")));
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 // Configuration du repository pour l'injection de dépendances

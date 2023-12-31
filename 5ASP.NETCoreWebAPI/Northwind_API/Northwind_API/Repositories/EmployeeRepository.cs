@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Northwind_API.Entities;
 using Repository;
-using Semaine_4___LegumesDemo.Models;
 
 namespace Northwind_API.Repositories
 {
@@ -13,7 +12,6 @@ namespace Northwind_API.Repositories
         }
 
         // DELETE BY ID
-
         public override async Task<Employee?> DeleteAsync(int id)
         {
             var employee = await _dbContext.Employees
