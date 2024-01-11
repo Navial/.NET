@@ -1,0 +1,66 @@
+﻿<Window x:Class="exam_septembre_2022.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:exam_septembre_2022.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.DataContext>
+        <local:ProductViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate x:Key="listboxTemplate">
+            <StackPanel Orientation="Horizontal">
+                <!-- id du produit -->
+                <TextBlock Text="{Binding ProductId}"/>
+                <!-- nom du produit -->
+                <TextBlock Text="{Binding ProductName}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Liste des produits -->
+        <ListBox x:Name="ProductsListBox"
+                 Grid.Column="0"
+                 ItemsSource="{Binding Products}"
+                 ItemTemplate="{StaticResource listboxTemplate}"
+                 SelectedItem="{Binding SelectedProduct}"
+                 />
+
+        <!-- Formulaire de mise à jour -->
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedProduct}">
+            <TextBlock Text="Product ID"/>
+            <TextBox Text="{Binding ProductId, Mode=OneWay}" IsReadOnly="True"/>
+            <TextBlock Text="Product Name"/>
+            <TextBox Text="{Binding ProductName}"/>
+            <TextBlock Text="Supplier Contact Name"/>
+            <TextBox Text="{Binding SupplierContactName, Mode=OneWay}" IsReadOnly="True"/>
+            <TextBlock Text="Quantity Per Unit"/>
+            <TextBox Text="{Binding QuantityPerUnit}"/>
+            <Button Content="Maj" Command="{Binding UpdateProductCommand}"/>
+        </StackPanel>
+
+        <!-- Total des ventes par produit -->
+        <ListView x:Name="SalesTotalListView"
+                  Grid.Column="2"
+                  ItemsSource="{Binding ProductSalesTotals}"
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Product ID" DisplayMemberBinding="{Binding ProductId}" />
+                    <GridViewColumn Header="Total Sales" DisplayMemberBinding="{Binding TotalSales}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
